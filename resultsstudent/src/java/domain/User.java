@@ -104,4 +104,15 @@ public class User{
     public boolean passwordEmpty(){
         return password.isEmpty();
     }
+    
+    public void addVak(Course course){
+       vakken.add(course);
+    }
+    
+    public void removeVak(Course course){
+        vakken.remove(course);
+    }
+    public List<Course> getVakken(){
+        return vakken;
+    }
 }
