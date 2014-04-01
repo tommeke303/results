@@ -74,6 +74,8 @@ public class Users{
         if (u.getUserName() == null){
             throw new BadRequestException("ongeldige username");
         }
+        // Opgelet: u.passwordEmpty() doet password.isEmpty().
+        // Dit kan een NullPointerException geven als password == null.
         if (u.passwordEmpty() && u.getPasswordLength() >= 8){
             throw new BadRequestException("ongeldig passwoord");
         }
@@ -87,6 +89,7 @@ public class Users{
     @DELETE
     @Path("{username}")
     public void removeUser(@PathParam("username") String username){
+        // Dit kan efficiÃ«nter. Je moet maar Ã©Ã©nmaal em.find doen.
         if (em.find(User.class, username) == null){
             throw new NotFoundException();
         }
