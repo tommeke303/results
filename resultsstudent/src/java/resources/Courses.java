@@ -30,10 +30,10 @@ import javax.ws.rs.core.MediaType;
  * @author thomas
  */
 
-@Path("users/{username}/Courses")
-@Transactional(dontRollbackOn = {BadRequestException.class, NotFoundException.class})
+//@Path("users/{username}/Courses")
+//@Transactional(dontRollbackOn = {BadRequestException.class, NotFoundException.class})
 public class Courses {
-    
+    /*
     @PersistenceContext
     private EntityManager em;
     
@@ -43,7 +43,8 @@ public class Courses {
         if (em.find(User.class, username) == null){
             throw new NotFoundException();
         }
-        return em.find(User.class, username).getVakken();
+        //return em.find(User.class, username).getVakken();
+        return null;
     }
     
     @POST
@@ -53,14 +54,14 @@ public class Courses {
             throw new NotFoundException();
         }
         User u = em.find(User.class, username);
-        if (u.getVakken().contains(c)){
+        /*if (u.getVakken().contains(c)){
             throw new BadRequestException("het vak bestaat al.");
-        }
+        }*/
         
-        u.addVak(c);
+        //u.addVak(c);
         
-    }
-    
+    /*}
+/*
     @DELETE
     @Path("{coursename}")
     public void removeCourse(@PathParam("username") String username, @PathParam("coursename") String coursename){
@@ -68,12 +69,12 @@ public class Courses {
             throw new NotFoundException();
         }
         User u = em.find(User.class, username);
-        if (!u.getVakken().contains(em.find(Course.class, coursename))){
+        /*if (!u.getVakken().contains(em.find(Course.class, coursename))){
             throw new BadRequestException("het vak bestaat nog niet.");
-        }
+        }*/
         //u.removeVak(em.find(Course.class, coursename));
-    }
-    
+    /*}
+    /*
     @PUT
     @Path("{coursename}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -84,8 +85,8 @@ public class Courses {
         }
         
         //dit moet gedaan worden via query. Er zal een where statement moeten worden ingestoken worden.
-        Course c = u.getVakken();
+        //Course c = u.getVakken();
         
     }
-    
+    */
 }

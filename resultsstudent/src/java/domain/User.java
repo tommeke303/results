@@ -4,13 +4,20 @@ package domain;
 import java.awt.Image;
 import java.security.MessageDigest;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import validation.OnPasswordUpdate;
+import validation.ValidPassword;
+import validation.ValidUsername;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -25,19 +32,26 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "TBL_USER")
+@SecondaryTable(name = "USER_PASSWORD")
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
 })
 
 public class User{
     @Id
+    @ValidUsername
     private String username;
-    private String fullname, password;
+    private String fullname;
+    
+    @NotNull
+    @Pattern(regexp="[A-Za-z0-9]{8}+")
+    @ValidPassword(groups = OnPasswordUpdate.class)
+    private String password;
+    
+    
+    
+    
     private String fotoURL;
-    @Transient
-    private int passwordLength;
-    @OneToMany
-    private List<Course> vakken;
 
     
 
@@ -47,34 +61,11 @@ public class User{
     public User(String fullname, String username, String password, String fotoURL) {
         this.fullname = fullname;
         this.username = username;
-        this.password = getPasswordHash(password);
+        this.password = password;
         this.fotoURL = fotoURL;
     }
 
-    private String getPasswordHash(String password) {
-        passwordLength = password.length();
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(password.getBytes("UTF-8"));
-            StringBuffer hexString = new StringBuffer();
-
-            for (int i = 0; i < hash.length; i++) {
-                String hex = Integer.toHexString(0xff & hash[i]);
-                if (hex.length() == 1) {
-                    hexString.append('0');
-                }
-                hexString.append(hex);
-            }
-
-            return hexString.toString();
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
     
-    public int getPasswordLength() {
-        return passwordLength;
-    }
     public String getFullname() {
         return fullname;
     }
@@ -99,20 +90,7 @@ public class User{
         this.fotoURL = fotoURL;
     }
     public void setPassword(String password){
-        this.password = getPasswordHash(password);
-    }
-    public boolean passwordEmpty(){
-        return password.isEmpty();
-    }
-    
-    public void addVak(Course course){
-       vakken.add(course);
-    }
-    
-    public void removeVak(Course course){
-        vakken.remove(course);
-    }
-    public List<Course> getVakken(){
-        return vakken;
+        this.password = password;
+        
     }
 }

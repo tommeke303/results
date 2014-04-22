@@ -25,6 +25,11 @@ public class Course {
     
     private String name;
     private int Year;
+
+    public Course() {
+    }
+    
+    
     
     public Course(String name, int year){
         this.name = name;
