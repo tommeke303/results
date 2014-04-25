@@ -44,7 +44,7 @@ public class User{
     private String fullname;
     
     @NotNull
-    @Pattern(regexp="[A-Za-z0-9]{8}+")
+    //@Pattern(regexp="[A-Za-z0-9]{8}+")
     @ValidPassword(groups = OnPasswordUpdate.class)
     private String password;
     

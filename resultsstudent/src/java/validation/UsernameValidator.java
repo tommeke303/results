@@ -22,7 +22,7 @@ public class UsernameValidator implements ConstraintValidator<ValidUsername, Str
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return value != null && value.matches("[a-zA-Z1-9]{8,255}+");
+        return value != null && value.matches("[a-zA-Z0-9]{8,255}+");
         
     }
     

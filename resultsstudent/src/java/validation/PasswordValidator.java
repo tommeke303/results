@@ -23,6 +23,6 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Str
     @Override
     public boolean isValid(String password, ConstraintValidatorContext context)
     {
-        return password != null && password.length() >= 8 && password.length() <= 255;
+        return password != null && password.length() >= 8 && password.length() <= 255 && password.matches("[A-Za-z0-9]{8}+");
     }
 }
